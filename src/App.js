@@ -1,4 +1,15 @@
 import Key from "./components/Key/Key";
+import { Howl, Howler } from "howler";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+`;
+
+const Button = styled.button`
+  width: 200px;
+  height: 40px;
+`;
 
 const notes = [
   "notes/01-1-Do.mp3",
@@ -25,27 +36,57 @@ const notes = [
   "notes/22-2-La.mp3",
   "notes/23-2-LaSharp.mp3",
   "notes/24-2-Si.mp3",
-  "notes/25-3-Si.mp3",
-  "notes/26-3-Do.mp3",
-  "notes/27-3-DoSharp.mp3",
-  "notes/28-3-Re.mp3",
-  "notes/29-3-ReSharp.mp3",
-  "notes/30-3-Mi.mp3",
-  "notes/31-3-Fa.mp3",
-  "notes/32-3-FaSharp.mp3",
-  "notes/33-3-Sol.mp3",
-  "notes/34-3-SolSharp.mp3",
-  "notes/35-3-La.mp3",
-  "notes/36-3-LaSharp.mp3",
-  "notes/37-3-Si.mp3",
+  "notes/25-3-Do.mp3",
+  "notes/26-3-DoSharp.mp3",
+  "notes/27-3-Re.mp3",
+  "notes/28-3-ReSharp.mp3",
+  "notes/29-3-Mi.mp3",
+  "notes/30-3-Fa.mp3",
+  "notes/31-3-FaSharp.mp3",
+  "notes/32-3-Sol.mp3",
+  "notes/33-3-SolSharp.mp3",
+  "notes/34-3-La.mp3",
+  "notes/35-3-LaSharp.mp3",
+  "notes/36-3-Si.mp3",
+  "notes/37-4-Do.mp3",
 ];
+
+/* let keySound = new Howl({
+  src: ["notes/01-1-Do.mp3"],
+}); */
+
+let keySounds = [];
+
+notes.forEach((item, index) => {
+  keySounds[index] = new Howl({
+    src: [item],
+  });
+});
+
+const stopNotes = () => {
+  keySounds.forEach((sound) => {
+    sound.stop();
+  });
+};
+
+const playArpeggio = () => {
+  keySounds.forEach((sound) => {
+    sound.stop();
+  });
+};
 
 function App() {
   return (
-    <div className="App">
-      <p>prueba de funcionamiento</p>
-      <Key />
-    </div>
+    <>
+      <Button onClick={stopNotes}>STOP</Button>
+      <Container className="App">
+        <Key keySound={keySounds[0]} />
+        <Key keySound={keySounds[1]} />
+        <Key keySound={keySounds[2]} />
+        <Key keySound={keySounds[3]} />
+      </Container>
+      <Button onClick={playArpeggio}>STOP</Button>
+    </>
   );
 }
 
