@@ -10,10 +10,10 @@ const WhiteKey = styled.div`
 
 export const Key = () => {
   let sound = new Howl({
-    src: ["/notes/01-1-Do.mp3"],
+    src: ["notes/01-1-Do.mp3"],
   });
   let sound2 = new Howl({
-    src: ["/notes/03-1-Re.mp3"],
+    src: ["notes/03-1-Re.mp3"],
   });
 
   const playNote = () => {

@@ -1,6 +1,6 @@
 import Key from "./components/Key/Key";
 
-const notes = [];
+const notes = [""];
 
 function App() {
   return (
