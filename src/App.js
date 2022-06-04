@@ -1,5 +1,7 @@
 import Key from "./components/Key/Key";
 
+const notes = [];
+
 function App() {
   return (
     <div className="App">
