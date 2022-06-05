@@ -13,7 +13,7 @@ const BlackKey = styled.div`
   width: 30px;
   height: 125px;
   background-color: black;
-  border: solid white 2px;
+  border: solid black 2px;
   color: white;
   text-align: center;
 `;
