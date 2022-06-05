@@ -1,6 +1,7 @@
 import Key from "./components/Key/Key";
 import { Howl, Howler } from "howler";
 import styled from "styled-components";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -51,10 +52,6 @@ const notes = [
   "notes/37-4-Do.mp3",
 ];
 
-/* let keySound = new Howl({
-  src: ["notes/01-1-Do.mp3"],
-}); */
-
 let keySounds = [];
 
 notes.forEach((item, index) => {
@@ -69,23 +66,78 @@ const stopNotes = () => {
   });
 };
 
+//const intervals = [0, 2, 2, 1, 2, 2, 2, 1]; //jónico //MAYOR
+//const intervals = [0, 2, 1, 2, 2, 2, 1, 2]; //dórico
+//const intervals = [0, 1, 2, 2, 2, 1, 2, 2]; //frigio
+const intervals = [0, 2, 2, 2, 1, 2, 2, 1]; //lidio
+//const intervals = [0, 2, 2, 1, 2, 2, 1, 2]; //mixolidio
+//const intervals = [0, 2, 1, 2, 2, 1, 2, 2]; //eólico //MENOR
+//const intervals = [0, 1, 2, 2, 1, 2, 2, 2]; //locrio
+
+//const intervals = [0, 1, 2, 1, 2, 1, 2, 1, 2];
+//const intervals = [0, 2, 1, 2, 1, 2, 2, 2];
+
+//111111111111
+//11111111112 -
+
+let sequence = [];
+
+const obtainSequence = () => {
+  let globalSum = 0;
+  let leftToRightSequence = intervals.map((item) => {
+    globalSum += item;
+    return globalSum;
+  });
+  let complete = [
+    ...leftToRightSequence,
+    ...leftToRightSequence.reverse().slice(1, -1),
+  ];
+
+  console.log(complete);
+  return complete;
+  /* complete.forEach((element) => {
+    setTimeout(() => {
+      keySounds[element].play();
+    }, "500");
+  }); */
+};
+
+let orden = 0;
+const playArrayNotes = () => {
+  //console.log();
+  keySounds[sequence[orden]].play();
+  orden >= sequence.length - 1 ? (orden = 0) : orden++;
+};
+
+const playSequence = () => {
+  sequence = obtainSequence();
+  //console.log(121);
+  setInterval(playArrayNotes, 500);
+};
+
+//let nIntervId = setInterval(playSequence, 500);
+
 const playArpeggio = () => {
   keySounds.forEach((sound) => {
-    sound.stop();
+    sound.play();
   });
 };
 
+const generateSequence = () => {};
+
 function App() {
+  //const [orden, setOrden] = useState(0);
+
   return (
     <>
       <Button onClick={stopNotes}>STOP</Button>
       <Container className="App">
-        <Key keySound={keySounds[0]} />
-        <Key keySound={keySounds[1]} />
-        <Key keySound={keySounds[2]} />
-        <Key keySound={keySounds[3]} />
+        {keySounds.map((item, index) => (
+          <Key key={index} note={index + 1} keySound={keySounds[index]} />
+        ))}
       </Container>
-      <Button onClick={playArpeggio}>STOP</Button>
+      <Button onClick={playSequence}>PLAY</Button>
+      <Button onClick={generateSequence}>GENERATE SEQUENCE</Button>
     </>
   );
 }

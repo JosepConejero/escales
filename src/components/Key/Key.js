@@ -8,7 +8,7 @@ const WhiteKey = styled.div`
   border: solid black 2px;
 `;
 
-export const Key = ({ keySound }) => {
+export const Key = ({ keySound, note }) => {
   /*  let keySound = new Howl({
     src: [sound],
   }); */
@@ -23,7 +23,7 @@ export const Key = ({ keySound }) => {
 
   return (
     <>
-      <WhiteKey onClick={playNote} />
+      <WhiteKey onClick={playNote}>{note}</WhiteKey>
     </>
   );
 };
