@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Howl, Howler } from "howler";
 
 const WhiteKey = styled.div`
   width: 30px;
