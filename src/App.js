@@ -69,9 +69,9 @@ const stopNotes = () => {
 //const intervals = [0, 2, 2, 1, 2, 2, 2, 1]; //jónico //MAYOR
 //const intervals = [0, 2, 1, 2, 2, 2, 1, 2]; //dórico
 //const intervals = [0, 1, 2, 2, 2, 1, 2, 2]; //frigio
-const intervals = [0, 2, 2, 2, 1, 2, 2, 1]; //lidio
+//const intervals = [0, 2, 2, 2, 1, 2, 2, 1]; //lidio
 //const intervals = [0, 2, 2, 1, 2, 2, 1, 2]; //mixolidio
-//const intervals = [0, 2, 1, 2, 2, 1, 2, 2]; //eólico //MENOR
+const intervals = [0, 2, 1, 2, 2, 1, 2, 2]; //eólico //MENOR
 //const intervals = [0, 1, 2, 2, 1, 2, 2, 2]; //locrio
 
 //const intervals = [0, 1, 2, 1, 2, 1, 2, 1, 2];
@@ -109,18 +109,23 @@ const playArrayNotes = () => {
   orden >= sequence.length - 1 ? (orden = 0) : orden++;
 };
 
+let nIntervId;
+
 const playSequence = () => {
   sequence = obtainSequence();
   //console.log(121);
-  setInterval(playArrayNotes, 500);
+  nIntervId = setInterval(playArrayNotes, 500);
 };
-
-//let nIntervId = setInterval(playSequence, 500);
 
 const playArpeggio = () => {
   keySounds.forEach((sound) => {
     sound.play();
   });
+};
+
+const stopSequence = () => {
+  clearInterval(nIntervId);
+  orden = 0;
 };
 
 const generateSequence = () => {};
@@ -130,14 +135,14 @@ function App() {
 
   return (
     <>
-      <Button onClick={stopNotes}>STOP</Button>
+      <Button onClick={stopNotes}>SILENCE</Button>
       <Container className="App">
         {keySounds.map((item, index) => (
           <Key key={index} note={index + 1} keySound={keySounds[index]} />
         ))}
       </Container>
       <Button onClick={playSequence}>PLAY</Button>
-      <Button onClick={generateSequence}>GENERATE SEQUENCE</Button>
+      <Button onClick={stopSequence}>STOP</Button>
     </>
   );
 }
