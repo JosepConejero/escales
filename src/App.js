@@ -2,7 +2,7 @@ import Key from "./components/Key/Key";
 import { Howl, Howler } from "howler";
 import styled from "styled-components";
 import { useState } from "react";
-import Digit from "./components/Digit/Digit";
+import DigitList from "./components/DigitList/DigitList";
 
 const Container = styled.div`
   display: flex;
@@ -144,7 +144,7 @@ function App() {
       </Container>
       <Button onClick={playSequence}>PLAY</Button>
       <Button onClick={stopSequence}>STOP</Button>
-      <Digit></Digit>
+      <DigitList></DigitList>
     </>
   );
 }
