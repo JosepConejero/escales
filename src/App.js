@@ -3,6 +3,10 @@ import { Howl, Howler } from "howler";
 import styled from "styled-components";
 import { useState } from "react";
 import DigitList from "./components/DigitList/DigitList";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { loadSequenceAction } from "./redux/actions/actionsCreator/actionsCreator";
+import InputScale from "./components/InputScale/InputScale";
 
 const Container = styled.div`
   display: flex;
@@ -67,12 +71,12 @@ const stopNotes = () => {
   });
 };
 
-//const intervals = [0, 2, 2, 1, 2, 2, 2, 1]; //jónico //MAYOR
+//const initialIntervals = [0, 2, 2, 1, 2, 2, 2, 1]; //jónico //MAYOR
 //const intervals = [0, 2, 1, 2, 2, 2, 1, 2]; //dórico
 //const intervals = [0, 1, 2, 2, 2, 1, 2, 2]; //frigio
 //const intervals = [0, 2, 2, 2, 1, 2, 2, 1]; //lidio
 //const intervals = [0, 2, 2, 1, 2, 2, 1, 2]; //mixolidio
-const intervals = [0, 2, 1, 2, 2, 1, 2, 2]; //eólico //MENOR
+const initialIntervals = [0, 2, 1, 2, 2, 1, 2, 2]; //eólico //MENOR
 //const intervals = [0, 1, 2, 2, 1, 2, 2, 2]; //locrio
 
 //const intervals = [0, 1, 2, 1, 2, 1, 2, 1, 2];
@@ -85,7 +89,7 @@ let sequence = [];
 
 const obtainSequence = () => {
   let globalSum = 0;
-  let leftToRightSequence = intervals.map((item) => {
+  let leftToRightSequence = initialIntervals.map((item) => {
     globalSum += item;
     return globalSum;
   });
@@ -132,7 +136,13 @@ const stopSequence = () => {
 const generateSequence = () => {};
 
 function App() {
-  //const [orden, setOrden] = useState(0);
+  const initialSequence = useSelector((state) => state.sequenceData);
+  console.log("initialSequence: ", initialSequence);
+  /* useEffect(() => {
+    //dispatch(loadSequenceAction(initialSequence));
+    //console.log(initialSequence);
+  }, [dispatch]);
+ */
 
   return (
     <>
@@ -145,6 +155,7 @@ function App() {
       <Button onClick={playSequence}>PLAY</Button>
       <Button onClick={stopSequence}>STOP</Button>
       <DigitList></DigitList>
+      <InputScale></InputScale>
     </>
   );
 }
