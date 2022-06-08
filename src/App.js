@@ -76,7 +76,7 @@ const stopNotes = () => {
 //const intervals = [0, 1, 2, 2, 2, 1, 2, 2]; //frigio
 //const intervals = [0, 2, 2, 2, 1, 2, 2, 1]; //lidio
 //const intervals = [0, 2, 2, 1, 2, 2, 1, 2]; //mixolidio
-const initialIntervals = [0, 2, 1, 2, 2, 1, 2, 2]; //eólico //MENOR
+//const initialIntervals = [0, 2, 1, 2, 2, 1, 2, 2]; //eólico //MENOR
 //const intervals = [0, 1, 2, 2, 1, 2, 2, 2]; //locrio
 
 //const intervals = [0, 1, 2, 1, 2, 1, 2, 1, 2];
@@ -87,7 +87,7 @@ const initialIntervals = [0, 2, 1, 2, 2, 1, 2, 2]; //eólico //MENOR
 
 let sequence = [];
 
-const obtainSequence = () => {
+const obtainSequence = (initialIntervals) => {
   let globalSum = 0;
   let leftToRightSequence = initialIntervals.map((item) => {
     globalSum += item;
@@ -100,11 +100,6 @@ const obtainSequence = () => {
 
   console.log(complete);
   return complete;
-  /* complete.forEach((element) => {
-    setTimeout(() => {
-      keySounds[element].play();
-    }, "500");
-  }); */
 };
 
 let orden = 0;
@@ -114,23 +109,10 @@ const playArrayNotes = () => {
   orden >= sequence.length - 1 ? (orden = 0) : orden++;
 };
 
-let nIntervId;
-
-const playSequence = () => {
-  sequence = obtainSequence();
-  //console.log(121);
-  nIntervId = setInterval(playArrayNotes, 500);
-};
-
 const playArpeggio = () => {
   keySounds.forEach((sound) => {
     sound.play();
   });
-};
-
-const stopSequence = () => {
-  clearInterval(nIntervId);
-  orden = 0;
 };
 
 const generateSequence = () => {};
@@ -143,6 +125,20 @@ function App() {
     //console.log(initialSequence);
   }, [dispatch]);
  */
+
+  //let nIntervId;
+  const [nIntervId, setnIntervId] = useState();
+  const playSequence = () => {
+    sequence = obtainSequence(initialSequence);
+    console.log("initSeq: ", initialSequence, "seq: ", sequence);
+    //nIntervId = setInterval(playArrayNotes, 500);
+    setnIntervId(setInterval(playArrayNotes, 500));
+  };
+
+  const stopSequence = () => {
+    clearInterval(nIntervId);
+    orden = 0;
+  };
 
   return (
     <>
