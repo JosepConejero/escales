@@ -1,11 +1,10 @@
 import Key from "./components/Key/Key";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import styled from "styled-components";
 import { useState } from "react";
 import DigitList from "./components/DigitList/DigitList";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { loadSequenceAction } from "./redux/actions/actionsCreator/actionsCreator";
+import { useSelector } from "react-redux";
+
 import InputScale from "./components/InputScale/InputScale";
 
 const Container = styled.div`
@@ -85,9 +84,9 @@ const stopNotes = () => {
 //111111111111
 //11111111112 -
 
-let sequence = [];
+//let arpeggio = [];
 
-const obtainSequence = (initialIntervals) => {
+/* const obtainSequence = (initialIntervals) => {
   let globalSum = 0;
   let leftToRightSequence = initialIntervals.map((item) => {
     globalSum += item;
@@ -98,48 +97,42 @@ const obtainSequence = (initialIntervals) => {
     ...leftToRightSequence.reverse().slice(1, -1),
   ];
 
-  console.log(complete);
+  console.log("entra en obtainSequence: ", complete);
   return complete;
-};
+}; */
 
-let orden = 0;
-const playArrayNotes = () => {
-  //console.log();
-  keySounds[sequence[orden]].play();
-  orden >= sequence.length - 1 ? (orden = 0) : orden++;
-};
-
-const playArpeggio = () => {
+/* const playArpeggio = () => {
   keySounds.forEach((sound) => {
     sound.play();
   });
-};
+}; */
 
-const generateSequence = () => {};
+console.log("ejecuta el cuerpo del componente pero fuera de App");
 
 function App() {
-  const initialSequence = useSelector((state) => state.sequenceData);
-  console.log("initialSequence: ", initialSequence);
-  /* useEffect(() => {
-    //dispatch(loadSequenceAction(initialSequence));
-    //console.log(initialSequence);
-  }, [dispatch]);
- */
-
-  //let nIntervId;
+  const arpeggioSequence = useSelector((state) => state.arpeggioData);
   const [nIntervId, setnIntervId] = useState();
+  let order = 0;
+
+  const playArrayNotes = () => {
+    keySounds[arpeggioSequence[order]].play();
+    order >= arpeggioSequence.length - 1 ? (order = 0) : order++;
+    console.log("entra en playArrayNotes");
+    console.log(arpeggioSequence);
+  };
+
   const playSequence = () => {
-    sequence = obtainSequence(initialSequence);
-    console.log("initSeq: ", initialSequence, "seq: ", sequence);
-    //nIntervId = setInterval(playArrayNotes, 500);
     setnIntervId(setInterval(playArrayNotes, 500));
+    console.log("entra en playSequence");
   };
 
   const stopSequence = () => {
     clearInterval(nIntervId);
-    orden = 0;
+    order = 0;
+    console.log("entra en stopSequence");
   };
 
+  console.log("entra dentro de App");
   return (
     <>
       <Button onClick={stopNotes}>SILENCE</Button>

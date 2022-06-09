@@ -1,6 +1,6 @@
 const actionTypes = {
-  loadSequence: "load-sequence",
   updateSequence: "update-sequence",
+  updateArpeggio: "update-arpeggio",
 };
 
 export default actionTypes;
