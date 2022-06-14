@@ -16,6 +16,13 @@ const Button = styled.button`
   height: 40px;
 `;
 
+const MarkDiv = styled.div`
+  margin-top: 25px;
+  border: solid black 1px;
+  width: 250px;
+  padding: 10px;
+`;
+
 const notes = [
   "notes/01-1-Do.mp3",
   "notes/02-1-DoSharp.mp3",
@@ -84,31 +91,6 @@ const stopNotes = () => {
 //111111111111
 //11111111112 -
 
-//let arpeggio = [];
-
-/* const obtainSequence = (initialIntervals) => {
-  let globalSum = 0;
-  let leftToRightSequence = initialIntervals.map((item) => {
-    globalSum += item;
-    return globalSum;
-  });
-  let complete = [
-    ...leftToRightSequence,
-    ...leftToRightSequence.reverse().slice(1, -1),
-  ];
-
-  console.log("entra en obtainSequence: ", complete);
-  return complete;
-}; */
-
-/* const playArpeggio = () => {
-  keySounds.forEach((sound) => {
-    sound.play();
-  });
-}; */
-
-console.log("ejecuta el cuerpo del componente pero fuera de App");
-
 function App() {
   const arpeggioSequence = useSelector((state) => state.arpeggioData);
   const [nIntervId, setnIntervId] = useState();
@@ -117,34 +99,79 @@ function App() {
   const playArrayNotes = () => {
     keySounds[arpeggioSequence[order]].play();
     order >= arpeggioSequence.length - 1 ? (order = 0) : order++;
-    console.log("entra en playArrayNotes");
-    console.log(arpeggioSequence);
   };
 
   const playSequence = () => {
     setnIntervId(setInterval(playArrayNotes, 500));
-    console.log("entra en playSequence");
   };
 
   const stopSequence = () => {
     clearInterval(nIntervId);
     order = 0;
-    console.log("entra en stopSequence");
   };
 
   console.log("entra dentro de App");
   return (
     <>
       <Button onClick={stopNotes}>SILENCE</Button>
+      <Button onClick={playSequence}>PLAY</Button>
+      <Button onClick={stopSequence}>STOP</Button>
       <Container className="App">
         {keySounds.map((item, index) => (
           <Key key={index} note={index + 1} keySound={keySounds[index]} />
         ))}
       </Container>
-      <Button onClick={playSequence}>PLAY</Button>
-      <Button onClick={stopSequence}>STOP</Button>
-      <DigitList></DigitList>
-      <InputScale></InputScale>
+      <form name="scales">
+        <MarkDiv>
+          <div>
+            {" "}
+            <input type="radio" name="keyboard"></input>
+            <label>KEYBOARD</label>
+          </div>
+          <div>
+            <input type="radio" name="keyboard" defaultChecked></input>
+            <InputScale></InputScale>
+          </div>
+          <div>
+            <input type="radio" name="keyboard"></input>
+            <select id="slcAutos">
+              <option value="jónico">jónico - 02212221 (mayor)</option>
+              <option value="dórico">dórico - 02122212</option>
+              <option value="frigio">frigio - 01222122</option>
+              <option value="lidio">lidio - 02221221</option>
+              <option value="mixolidio">mixolidio - 02212212</option>
+              <option value="eólico">eólico - 02122122 (menor)</option>
+              <option value="locrio">locrio - 01221222</option>
+              <option value="raruna1">012121212</option>
+              <option value="raruna2">02121222</option>
+            </select>
+          </div>
+        </MarkDiv>
+      </form>
+
+      <form name="arpeggios">
+        <MarkDiv>
+          <div>
+            {" "}
+            <input type="radio" name="arpeg" defaultChecked></input>
+            <label>ASCEND / DESCEND</label>
+          </div>
+          <div>
+            <input type="radio" name="arpeg"></input>
+            <label>ASCEND</label>
+          </div>
+          <div>
+            <input type="radio" name="arpeg"></input>
+            <label>RANDOM</label>
+          </div>
+        </MarkDiv>
+      </form>
+      <MarkDiv>SPEED</MarkDiv>
+      <MarkDiv>
+        ESCALAS: DoM Do#M Re... (cuando pulso una escala, ilumina las teclas que
+        esa escala incluye) Si pulso sobre las teclas, me dice qué escalas
+        incluyen esas notas Botón de resetear
+      </MarkDiv>
     </>
   );
 }
